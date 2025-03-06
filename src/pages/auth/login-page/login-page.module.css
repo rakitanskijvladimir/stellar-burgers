@@ -1,0 +1,26 @@
+.container {
+    margin: 180px auto 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.linkBlock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8585AD;
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+}

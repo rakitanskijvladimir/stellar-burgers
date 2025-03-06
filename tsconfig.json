@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "typeRoots": ["./node_modules/@types"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -13,20 +18,13 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false,
-    "jsx": "react-jsx",
-    "types": ["node", "jest"],
-    "baseUrl": ".",
-    "paths": {
-      "@pages": ["src/pages"],
-      "@components": ["src/components"],
-      "@ui": ["src/components/ui"],
-      "@ui-pages": ["src/components/ui/pages"],
-      "@utils-types": ["src/utils/types"],
-      "@api": ["src/utils/burger-api.ts"],
-      "@slices": ["src/services/slices"],
-      "@selectors": ["src/services/selectors"]
-    }
+    "noEmit": true,
+    "jsx": "react-jsx"
+   
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*",
+    "./node_modules/@types/react",
+    "./node_modules/@types/react-dom"
+  ]
 }

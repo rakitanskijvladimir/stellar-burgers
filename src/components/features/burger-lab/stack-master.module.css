@@ -1,0 +1,65 @@
+.section {
+    width: 100%;
+    max-width: 600px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: calc(100vh - 350px);
+    position: relative;
+}
+
+.dragging {
+    box-shadow:
+        0 0 8px rgba(51, 51, 255, 0.15),
+        0 0 16px rgba(51, 51, 255, 0.15),
+        0 4px 32px rgba(51, 51, 255, 0.15);
+    border-radius: 30px;
+}
+
+.main {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.main::-webkit-scrollbar {
+    width: 8px;
+}
+.main::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+.main::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.createOrder {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    gap: 40px;
+}
+
+.totalPrice {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+
+.totalPrice svg {
+    height: 36px;
+    width: 36px;
+}
+
+.textClue {
+    align-self: center;
+    text-align: center;
+    position: absolute;
+    max-width: 400px;
+    top: 50%;
+    opacity: .4;
+}

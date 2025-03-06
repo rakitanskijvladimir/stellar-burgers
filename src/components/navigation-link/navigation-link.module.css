@@ -1,0 +1,17 @@
+.active {
+    color: #F2F2F3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin: 0;
+}
+
+.inactive {
+    color: #8585AD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin: 0;
+}
