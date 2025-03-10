@@ -1,15 +1,30 @@
-import { Preloader } from '@ui';
+import { Informer, Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { TOrder } from '@utils-types';
-import { FC } from 'react';
+import { FC, useCallback, useEffect } from 'react';
+import { listSelecors, errorSelector, itemLoad, fetchFeeds } from '@slices';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Feed: FC = () => {
-  /** TODO: взять переменную из стора */
-  const orders: TOrder[] = [];
+  const dispatch = useDispatch();
 
-  if (!orders.length) {
+  const orders: TOrder[] = useSelector(listSelecors);
+  const ordersLoading = useSelector(itemLoad);
+  const ordersError = useSelector(errorSelector);
+
+  const handleGetFeeds = useCallback(() => dispatch(fetchFeeds()), []);
+
+  useEffect(() => {
+    handleGetFeeds();
+  }, []);
+
+  if (ordersLoading) {
     return <Preloader />;
   }
 
-  <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+  if (ordersError) {
+    return <Informer variant='error'>{ordersError}</Informer>;
+  }
+
+  return <FeedUI orders={orders} handleGetFeeds={handleGetFeeds} />;
 };

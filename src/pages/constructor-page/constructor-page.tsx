@@ -1,20 +1,23 @@
+import { FC } from 'react';
+import { burgerErrorS, burgerLoadSelector } from '@slices';
 import { useSelector } from '../../services/store';
-
-import styles from './constructor-page.module.css';
-
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
-import { Preloader } from '../../components/ui';
-import { FC } from 'react';
+import { Informer, Preloader } from '../../components/ui';
+import styles from './constructor-page.module.css';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
+  const isIngredientsLoading = useSelector(burgerLoadSelector);
+  const ingredientsError = useSelector(burgerErrorS);
 
   return (
     <>
       {isIngredientsLoading ? (
         <Preloader />
+      ) : ingredientsError ? (
+        <div className={styles.informerWrapper}>
+          <Informer variant='error'>{ingredientsError}</Informer>
+        </div>
       ) : (
         <main className={styles.containerMain}>
           <h1

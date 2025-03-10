@@ -10,6 +10,7 @@ import { RegisterUIProps } from './type';
 
 export const RegisterUI: FC<RegisterUIProps> = ({
   errorText,
+  isLoading,
   email,
   setEmail,
   handleSubmit,
@@ -37,6 +38,8 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               error={false}
               errorText=''
               size='default'
+              onPointerEnterCapture={() => {}}
+              onPointerLeaveCapture={() => {}}
             />
           </div>
           <div className='pb-6'>
@@ -49,6 +52,8 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               error={false}
               errorText=''
               size={'default'}
+              onPointerEnterCapture={() => {}}
+              onPointerLeaveCapture={() => {}}
             />
           </div>
           <div className='pb-6'>
@@ -60,7 +65,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
           </div>
           <div className={`pb-6 ${styles.button}`}>
             <Button type='primary' size='medium' htmlType='submit'>
-              Зарегистрироваться
+              {isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
             </Button>
           </div>
           {errorText && (
