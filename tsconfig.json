@@ -17,6 +17,7 @@
     "jsx": "react-jsx",
     "types": ["node", "jest", "cypress"],
     "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types"],
     "paths": {
       "@pages": ["src/pages"],
       "@components": ["src/components"],
