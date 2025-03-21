@@ -11,7 +11,7 @@ describe('constructorSlice', () => {
     const action = addIngredient(ingredient);
     const state = constructorReducer(initialState, action);
 
-    expect(state.ingredients).equal([ingredient]);
+    expect(state.ingredients).toEqual([ingredient]);
   });
 
   it('должен обрабатывать удаление ингредиента', () => {
@@ -21,7 +21,7 @@ describe('constructorSlice', () => {
     const action = removeIngredient('1');
     const state = constructorReducer(initialStateWithIngredients, action);
 
-    expect(state.ingredients).equal([]);
+    expect(state.ingredients).toEqual([]);
   });
 
   it('должен обрабатывать изменение порядка ингредиентов', () => {
@@ -34,7 +34,7 @@ describe('constructorSlice', () => {
     const action = moveIngredient({ fromIndex: 0, toIndex: 1 });
     const state = constructorReducer(initialStateWithIngredients, action);
 
-    expect(state.ingredients).equal([
+    expect(state.ingredients).toEqual([
       { id: '2', name: 'Соус', type: 'sauce' },
       { id: '1', name: 'Булка', type: 'bun' },
     ]);
