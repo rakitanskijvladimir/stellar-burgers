@@ -1,74 +1,86 @@
-import 'cypress';
-
 describe('Конструктор бургера', () => {
+  const baseURL = 'http://localhost:3000'; // Замените на URL своего приложения
+
   beforeEach(() => {
-    // Перехват запросов
-    cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' }).as('getIngredients');
-    cy.intercept('POST', 'api/auth/login', { fixture: 'user.json' }).as('login');
-    cy.intercept('GET', 'api/auth/user', { fixture: 'user.json' }).as('getUser');
-    cy.intercept('POST', 'api/orders', { fixture: 'order.json' }).as('createOrder');
+    // Перехватываем запросы к API, подменяя их fixture данными
+    cy.intercept('GET', `${baseURL}/api/ingredients`, { fixture: 'ingredients.json' }).as('getIngredients');
+    cy.intercept('POST', `${baseURL}/api/auth/login`, { fixture: 'user.json' }).as('login');
+    cy.intercept('GET', `${baseURL}/api/auth/user`, { fixture: 'user.json' }).as('getUser');
+    cy.intercept('POST', `${baseURL}/api/orders`, { fixture: 'order.json' }).as('createOrder');
 
-    // Установка токенов
-    window.localStorage.setItem('refreshToken', 'someValueRefreshToken');
-    cy.setCookie('accessToken', 'someValueAccessToken');
+    // Устанавливаем моковые токены авторизации
+    window.localStorage.setItem('refreshToken', 'mockRefreshToken');
+    cy.setCookie('accessToken', 'mockAccessToken');
 
-    // Переход на страницу конструктора
+    // Переходим на страницу конструктора
     cy.visit('/');
+
+    // Ожидаем загрузку данных (ингредиентов)
+    cy.wait('@getIngredients');
   });
 
   afterEach(() => {
-    // Очистка localStorage и cookies
-    window.localStorage.clear();
+    // Очистка cookies и localStorage после каждого теста
     cy.clearCookies();
+    window.localStorage.clear();
   });
 
   it('Добавление ингредиентов в конструктор', () => {
-    // Проверка загрузки ингредиентов
-    cy.wait('@getIngredients');
+    // Проверяем, что разделы ингредиентов загрузились
+    cy.get('[data-cy="section_ingredients_bun"]').should('exist');
+    cy.get('[data-cy="section_ingredients_sauce"]').should('exist');
+    cy.get('[data-cy="section_ingredients_main"]').should('exist');
 
-    // Добавление булки
+    // Добавляем булку в конструктор
     cy.get('[data-cy="section_ingredients_bun"]').first().find('button').click();
     cy.get('[data-cy="section_constructor_element_top_bun"]').should('exist');
     cy.get('[data-cy="section_constructor_element_bottom_bun"]').should('exist');
 
-    // Добавление соуса
-    cy.get('[data-cy="section_ingredients_sauce"]').last().find('button').click();
+    // Добавляем соус в конструктор
+    cy.get('[data-cy="section_ingredients_sauce"]').first().find('button').click();
     cy.get('[data-cy="section_constructor_element_sauce"]').should('exist');
+
+    // Добавляем начинку в конструктор
+    cy.get('[data-cy="section_ingredients_main"]').first().find('button').click();
+    cy.get('[data-cy="section_constructor_element_main"]').should('exist');
   });
 
   it('Работа модальных окон', () => {
-    // Открытие модального окна ингредиента
+    // Открываем модальное окно ингредиента
     cy.get('[data-cy="section_ingredients_bun"]').first().find('a').click();
     cy.get('[data-cy="modal_content"]').should('exist');
 
-    // Закрытие модального окна по клику на крестик
+    // Закрываем модальное окно по клику на крестик
     cy.get('[data-cy="modal_close_button"]').click();
     cy.get('[data-cy="modal_content"]').should('not.exist');
 
-    // Закрытие модального окна по клику на оверлей
+    // Снова открываем модальное окно
     cy.get('[data-cy="section_ingredients_bun"]').first().find('a').click();
+    cy.get('[data-cy="modal_content"]').should('exist');
+
+    // Закрываем модальное окно по клику на оверлей
     cy.get('[data-cy="modal_overlay"]').click({ force: true });
     cy.get('[data-cy="modal_content"]').should('not.exist');
   });
 
   it('Создание заказа', () => {
-    // Добавление ингредиентов
+    // Добавляем ингредиенты в конструктор
     cy.get('[data-cy="section_ingredients_bun"]').first().find('button').click();
-    cy.get('[data-cy="section_ingredients_main"]').eq(1).find('button').click();
-    cy.get('[data-cy="section_ingredients_sauce"]').last().find('button').click();
+    cy.get('[data-cy="section_ingredients_main"]').first().find('button').click();
+    cy.get('[data-cy="section_ingredients_sauce"]').first().find('button').click();
 
-    // Оформление заказа
+    // Оформляем заказ
     cy.get('[data-cy="on_order_button"]').click();
 
-    // Проверка модального окна с номером заказа
+    // Проверяем, что модальное окно с номером заказа открылось
     cy.get('[data-cy="modal_content"]').should('exist');
-    cy.get('[data-cy="modal_content"]').contains('87787');
+    cy.get('[data-cy="modal_content"]').contains('87787'); // Номер заказа из fixture
 
-    // Закрытие модального окна
+    // Закрываем модальное окно
     cy.get('[data-cy="modal_close_button"]').click();
     cy.get('[data-cy="modal_content"]').should('not.exist');
 
-    // Проверка, что конструктор пуст
+    // Проверяем, что конструктор пуст
     cy.get('[data-cy="section_constructor_element_top_bun"]').should('not.exist');
     cy.get('[data-cy="section_constructor_element_main"]').should('not.exist');
     cy.get('[data-cy="section_constructor_element_sauce"]').should('not.exist');
