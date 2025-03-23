@@ -16,17 +16,17 @@ describe('ingredientsSlice', () => {
     const action = fetchIngredientsRequest();
     const state = ingredientsReducer(initialState, action);
 
-    expect(state.isLoading).toBe(true);
-    expect(state.error).toBeNull();
+    expect(state.isLoading).toBe(true); 
+    expect(state.error).toBeNull(); 
   });
 
   it('должен обрабатывать экшен fetchIngredientsSuccess', () => {
-    const ingredients: Ingredient[] = [{ id: '1', name: 'Булка', type: 'bun' } as Ingredient];
+    const ingredients: Ingredient[] = [{ id: '1', name: 'Булка', type: 'bun' }];
     const action = fetchIngredientsSuccess(ingredients);
     const state = ingredientsReducer({ ...initialState, isLoading: true }, action);
 
-    expect(state.data).toEqual(ingredients);
-    expect(state.isLoading).toBe(false);
+    expect(state.data).toEqual(ingredients); 
+    expect(state.isLoading).toBe(false); 
   });
 
   it('должен обрабатывать экшен fetchIngredientsFailed', () => {
@@ -34,7 +34,7 @@ describe('ingredientsSlice', () => {
     const action = fetchIngredientsFailed(error);
     const state = ingredientsReducer({ ...initialState, isLoading: true }, action);
 
-    expect(state.error).toBe(error);
-    expect(state.isLoading).toBe(false);
+    expect(state.error).toBe(error); 
+    expect(state.isLoading).toBe(false); 
   });
 });

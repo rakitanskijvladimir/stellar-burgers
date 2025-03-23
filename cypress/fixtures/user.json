@@ -1,8 +1,8 @@
 {
   "success": true,
   "user": {
-    "email": "test@example.com",
-    "name": "Test User"
+    "email": "3003003@yandex.ru",
+    "name": "VLADI"
   },
   "accessToken": "mockAccessToken",
   "refreshToken": "mockRefreshToken"

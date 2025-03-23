@@ -69,6 +69,7 @@ export const BurgerConstructor: FC = () => {
       orderModalData={orderModalData}
       onOrderClick={onOrderClick}
       closeOrderModal={closeOrderModal}
+      data-cy='section_constructor'
     />
   );
 };
