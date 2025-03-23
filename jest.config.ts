@@ -1,10 +1,7 @@
-import type { Config } from 'jest';
 
-const config: Config = {
-  preset: 'ts-jest',
-  collectCoverage: true,
-  coverageDirectory: 'coverage',
-  coverageProvider: 'v8'
+module.exports = {
+  preset: 'ts-jest', // Используем ts-jest для поддержки TypeScript
+  testEnvironment: 'node', // Окружение для тестов
+  moduleFileExtensions: ['ts', 'tsx', 'js'], // Расширения файлов
+  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'], // Шаблон для поиска тестовых файлов
 };
-
-export default config;

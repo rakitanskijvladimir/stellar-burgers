@@ -20,6 +20,7 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
         count={count}
         locationState={{ background: location }}
         handleAdd={handleAdd}
+        data-cy='section_ingredients_main'
       />
     );
   }
