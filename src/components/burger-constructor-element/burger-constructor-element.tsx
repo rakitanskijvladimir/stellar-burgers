@@ -28,6 +28,13 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
         handleMoveUp={handleMoveUp}
         handleMoveDown={handleMoveDown}
         handleClose={handleClose}
+        data-cy={
+          ingredient.type === 'bun' && index === 0
+            ? 'section_constructor_element_top_bun'
+            : ingredient.type === 'bun' && index === totalItems - 1
+              ? 'section_constructor_element_bottom_bun'
+              : 'section_constructor_element_main'
+        }
       />
     );
   }

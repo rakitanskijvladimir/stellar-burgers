@@ -2,6 +2,7 @@ const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, './src/index.tsx'),
@@ -54,8 +55,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     }),
-    new Dotenv()
+    new Dotenv(),
+    new NodePolyfillPlugin(),
   ],
+ 
   resolve: {
     extensions: [
       '*',
@@ -89,6 +92,6 @@ module.exports = {
     static: path.join(__dirname, './dist'),
     compress: true,
     historyApiFallback: true,
-    port: 4000
-  }
+    port: 3000
+  },
 };
